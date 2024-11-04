@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>workout planner</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="./styles/output.css" />
+    <style>
+      * {
+        --theme1-color1: #1e201e;
+        --theme1-color2: #3c3d37;
+        --theme1-color3: #697565;
+        --theme1-color4: #ecdfcc;
+      }
+    </style>
+  </head>
+  <body class="bg-[#1E201E] text-[#ECDFCC] h-screen overflow-hidden">
+    <div id="app" class="max-w-lg min-h-full mx-auto px-3 py-5 flex flex-col">
+      <header>
+        <h1 class="capitalize font-bold text-lg text-center">workout diary</h1>
+        <nav
+          class="bg-[#3C3D37] flex justify-between rounded-3xl overflow-hidden p-1 space-x-1 text-sm my-9"
+        >
+          <div class="w-full max-w-40 rounded-s-3xl bg-[#1E201E]">
+            <button
+              class="text-center py-3 px-2 w-full rounded-3xl capitalize active:bg-[#1E201E]"
+            >
+              note
+            </button>
+          </div>
+          <div class="w-full max-w-40">
+            <button
+              class="text-center py-3 px-2 w-full rounded-3xl capitalize active:bg-[#1E201E]"
+            >
+              view
+            </button>
+          </div>
+          <div class="w-full max-w-40 rounded-e-3xl">
+            <button
+              class="text-center py-3 px-2 w-full rounded-3xl capitalize active:bg-[#1E201E]"
+            >
+              history
+            </button>
+          </div>
+        </nav>
+      </header>
+      <main
+        class="flex-grow max-h-96 overflow-y-auto rounded-lg bg-[#3C3D37] border-[#697565] border px-2 py-4 flex"
+      >
+        <form class="flex flex-col space-y-2 flex-grow hidden">
+          <input
+            type="text"
+            placeholder="routine name"
+            class="border-[#697565] border outline-none bg-transparent rounded-lg p-2 w-full placeholder:text-[#697565] focus:bg-[#1E201E]"
+          />
+          <input
+            type="text"
+            placeholder="exercise name"
+            class="border-[#697565] border outline-none bg-transparent rounded-lg p-2 w-full placeholder:text-[#697565] focus:bg-[#1E201E]"
+          />
+          <div class="flex justify-center space-x-2">
+            <input
+              type="text"
+              placeholder="add set"
+              class="border-[#697565] border outline-none bg-transparent rounded-lg p-2 w-full placeholder:text-[#697565] focus:bg-[#1E201E]"
+            />
+            <button
+              class="px-6 uppercase text-sm font-bold border border-[#697565] rounded-lg active:bg-[#1E201E]"
+            >
+              add
+            </button>
+          </div>
+          <div class="border-[#697565] border flex-grow p-2 overflow-y-auto">
+            <div class="flex flex-wrap gap-2 justify-center">
+              <button
+                class="bg-[#697565] px-2 py-1 uppercase font-bold text-base inline-flex items-center justify-center"
+              >
+                1. <span class="capitalize font-normal ml-1">20kg:12rep</span
+                ><span class="ml-2"
+                  ><img src="./assets/cross.svg" alt="" class="size-5"
+                /></span>
+              </button>
+            </div>
+          </div>
+          <button
+            type="submit"
+            class="p-2 w-full border-[#697565] border rounded-lg uppercase font-bold active:bg-[#1E201E]"
+          >
+            save
+          </button>
+        </form>
+
+        <!-- <div class="bg-red-800 h-96"></div>
+        <div class="bg-red-800 h-96"></div> -->
+      </main>
+      <footer class="flex justify-center items-center mt-5">
+        <button class="size-10">
+          <img src="./assets/setting.svg" alt="setting button" />
+        </button>
+      </footer>
+    </div>
+  </body>
+</html>
