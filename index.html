@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="./styles/output.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
       * {
         --theme1-color1: #1e201e;
@@ -21,26 +22,31 @@
       <header>
         <h1 class="capitalize font-bold text-lg text-center">workout diary</h1>
         <nav
+          id="navigation-menu"
           class="bg-[#3C3D37] flex justify-between rounded-3xl overflow-hidden p-1 space-x-1 text-sm my-9"
         >
-          <div class="w-full max-w-40 rounded-s-3xl bg-[#1E201E]">
-            <button
-              class="text-center py-3 px-2 w-full rounded-3xl capitalize active:bg-[#1E201E]"
-            >
+          <div
+            button="1"
+            class="w-full max-w-40 rounded-s-3xl bg-[#1E201E] active:bg-[#1E201E]"
+          >
+            <button class="text-center py-3 px-2 w-full rounded-3xl capitalize">
               note
             </button>
           </div>
-          <div class="w-full max-w-40">
-            <button
-              class="text-center py-3 px-2 w-full rounded-3xl capitalize active:bg-[#1E201E]"
-            >
+          <div
+            id="view-nav-button"
+            button="2"
+            class="w-full max-w-40 active:bg-[#1E201E]"
+          >
+            <button class="text-center py-3 px-2 w-full rounded-3xl capitalize">
               view
             </button>
           </div>
-          <div class="w-full max-w-40 rounded-e-3xl">
-            <button
-              class="text-center py-3 px-2 w-full rounded-3xl capitalize active:bg-[#1E201E]"
-            >
+          <div
+            button="3"
+            class="w-full max-w-40 rounded-e-3xl active:bg-[#1E201E]"
+          >
+            <button class="text-center py-3 px-2 w-full rounded-3xl capitalize">
               history
             </button>
           </div>
@@ -49,39 +55,53 @@
       <main
         class="flex-grow max-h-96 overflow-y-auto rounded-lg bg-[#3C3D37] border-[#697565] border px-2 py-4 flex"
       >
-        <form class="flex flex-col space-y-2 flex-grow hidden">
+        <form
+          id="note-component"
+          class="flex flex-col space-y-2 flex-grow overflow-y-auto"
+        >
           <input
+            required
+            id="routine-name"
             type="text"
             placeholder="routine name"
             class="border-[#697565] border outline-none bg-transparent rounded-lg p-2 w-full placeholder:text-[#697565] focus:bg-[#1E201E]"
           />
           <input
+            required
+            id="exersice-name"
             type="text"
-            placeholder="exercise name"
+            placeholder="exercise "
             class="border-[#697565] border outline-none bg-transparent rounded-lg p-2 w-full placeholder:text-[#697565] focus:bg-[#1E201E]"
           />
           <div class="flex justify-center space-x-2">
             <input
+              id="add-set-textInput"
               type="text"
               placeholder="add set"
               class="border-[#697565] border outline-none bg-transparent rounded-lg p-2 w-full placeholder:text-[#697565] focus:bg-[#1E201E]"
             />
             <button
+              id="add-set-button"
+              type="button"
               class="px-6 uppercase text-sm font-bold border border-[#697565] rounded-lg active:bg-[#1E201E]"
             >
               add
             </button>
           </div>
           <div class="border-[#697565] border flex-grow p-2 overflow-y-auto">
-            <div class="flex flex-wrap gap-2 justify-center">
-              <button
+            <div
+              id="set-tag-container"
+              class="flex flex-wrap gap-2 justify-center"
+            >
+              <!-- <button
+              type="button"
                 class="bg-[#697565] px-2 py-1 uppercase font-bold text-base inline-flex items-center justify-center"
               >
                 1. <span class="capitalize font-normal ml-1">20kg:12rep</span
                 ><span class="ml-2"
                   ><img src="./assets/cross.svg" alt="" class="size-5"
                 /></span>
-              </button>
+              </button> -->
             </div>
           </div>
           <button
@@ -92,8 +112,65 @@
           </button>
         </form>
 
-        <!-- <div class="bg-red-800 h-96"></div>
-        <div class="bg-red-800 h-96"></div> -->
+        <div id="view-component" class="w-full hidden">
+          <!-- <div>
+            <h1 class="text-xl font-extrabold text-[#ecdfcc]">Arm Wrestling</h1>
+            <div>
+              <p class="text-[#ecdfcc] py-1">1. Cupping</p>
+              <ul
+                class="text-base leading-8 text-[#ecdfcc] text-center space-y-1"
+              >
+                <li class="bg-[#1e201e] rounded-md">20kg:2rep</li>
+                <li class="bg-[#1e201e] rounded-md">25kd:6rep</li>
+                <li class="bg-[#1e201e] rounded-md">45kg:2rep</li>
+                <li class="bg-[#1e201e] rounded-md">60kg:0rep</li>
+              </ul>
+            </div>
+          </div>
+          <div>
+            <p class="text-[#ecdfcc] py-1 my-1">1. Cupping</p>
+            <ul
+              class="text-base leading-8 text-[#ecdfcc] text-center space-y-1"
+            >
+              <li class="bg-[#1e201e] rounded-md">20kg:2rep</li>
+              <li class="bg-[#1e201e] rounded-md">25kd:6rep</li>
+              <li class="bg-[#1e201e] rounded-md">45kg:2rep</li>
+              <li class="bg-[#1e201e] rounded-md">60kg:0rep</li>
+            </ul>
+          </div>
+          <div>
+            <p class="text-[#ecdfcc] py-1">1. Cupping</p>
+            <ul
+              class="text-base leading-8 text-[#ecdfcc] text-center space-y-1"
+            >
+              <li class="bg-[#1e201e] rounded-md">20kg:2rep</li>
+              <li class="bg-[#1e201e] rounded-md">25kd:6rep</li>
+              <li class="bg-[#1e201e] rounded-md">45kg:2rep</li>
+              <li class="bg-[#1e201e] rounded-md">60kg:0rep</li>
+            </ul>
+          </div> -->
+        </div>
+
+        <div id="history-component" class="w-full hidden">
+          <!-- <div>
+            <h1 class="text-xl font-extrabold text-[#ecdfcc]">Arm Wrestling</h1>
+            <div>
+              <div class="py-1.5">
+                <span>1. Cupping</span>
+                <span class="float-right">04/11/2004</span>
+              </div>
+
+              <ul
+                class="text-base leading-8 text-[#ecdfcc] text-center space-y-1"
+              >
+                <li class="bg-[#1e201e] rounded-md">20kg: 2rep</li>
+                <li class="bg-[#1e201e] rounded-md">25kd: 6rep</li>
+                <li class="bg-[#1e201e] rounded-md">45kg: 2rep</li>
+                <li class="bg-[#1e201e] rounded-md">60kg: 0rep</li>
+              </ul>
+            </div>
+          </div> -->
+        </div>
       </main>
       <footer class="flex justify-center items-center mt-5">
         <button class="size-10">
@@ -101,5 +178,6 @@
         </button>
       </footer>
     </div>
+    <script src=".//scripts/main.js"></script>
   </body>
 </html>
