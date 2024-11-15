@@ -14,11 +14,15 @@
         --theme1-color2: #3c3d37;
         --theme1-color3: #697565;
         --theme1-color4: #ecdfcc;
+        --theme1-color2-50: #1e201eb3;
       }
     </style>
   </head>
   <body class="bg-[#1E201E] text-[#ECDFCC] h-screen overflow-hidden">
-    <div id="app" class="max-w-lg min-h-full mx-auto px-3 py-5 flex flex-col">
+    <div
+      id="app"
+      class="max-w-lg min-h-full mx-auto px-3 py-5 flex flex-col relative"
+    >
       <header>
         <h1 class="capitalize font-bold text-lg text-center">workout diary</h1>
         <nav
@@ -116,7 +120,7 @@
           <!-- <div>
             <h1 class="text-xl font-extrabold text-[#ecdfcc]">Arm Wrestling</h1>
             <div>
-              <p class="text-[#ecdfcc] py-1">1. Cupping</p>
+              <p class="text-[#ecdfcc] py-1 flex items-center justify-between mb-2">1. Cupping <button class="size-8 p-1 mr-2 active:bg-[#1E201E] rounded"><img src="./assets/cross.svg" alt="" class="w-full"></button></p>
               <ul
                 class="text-base leading-8 text-[#ecdfcc] text-center space-y-1"
               >
@@ -126,28 +130,6 @@
                 <li class="bg-[#1e201e] rounded-md">60kg:0rep</li>
               </ul>
             </div>
-          </div>
-          <div>
-            <p class="text-[#ecdfcc] py-1 my-1">1. Cupping</p>
-            <ul
-              class="text-base leading-8 text-[#ecdfcc] text-center space-y-1"
-            >
-              <li class="bg-[#1e201e] rounded-md">20kg:2rep</li>
-              <li class="bg-[#1e201e] rounded-md">25kd:6rep</li>
-              <li class="bg-[#1e201e] rounded-md">45kg:2rep</li>
-              <li class="bg-[#1e201e] rounded-md">60kg:0rep</li>
-            </ul>
-          </div>
-          <div>
-            <p class="text-[#ecdfcc] py-1">1. Cupping</p>
-            <ul
-              class="text-base leading-8 text-[#ecdfcc] text-center space-y-1"
-            >
-              <li class="bg-[#1e201e] rounded-md">20kg:2rep</li>
-              <li class="bg-[#1e201e] rounded-md">25kd:6rep</li>
-              <li class="bg-[#1e201e] rounded-md">45kg:2rep</li>
-              <li class="bg-[#1e201e] rounded-md">60kg:0rep</li>
-            </ul>
           </div> -->
         </div>
 
@@ -173,10 +155,79 @@
         </div>
       </main>
       <footer class="flex justify-center items-center mt-5">
-        <button class="size-10">
+        <button id="setting-button" class="size-10">
           <img src="./assets/setting.svg" alt="setting button" />
         </button>
       </footer>
+
+      <!-- setting component  -->
+      <div
+        id="setting-component-wraper"
+        class="bg-[#1e201eb3] backdrop-blur absolute inset-0 py-12 hidden"
+      >
+        <div
+          id="setting-component"
+          class="bg-[#ecdfcc] text-[#1e201e] size-full max-w-xs mx-auto rounded-lg flex flex-col p-2 space-y-2"
+        >
+          <div id="top" class="flex items-center justify-between">
+            <p class="text-lg capitalize font-bold">setting</p>
+            <button
+              id="setting-close-button"
+              class="size-10 bg-red-500/50 rounded-full p-1 active:bg-[#]"
+            >
+              <img src="./assets/cross.svg" alt="" class="w-full" />
+            </button>
+          </div>
+          <div
+            id="middle"
+            class="flex-grow border-y-2 border-[#1e201e] flex flex-col"
+          >
+            <div class="flex-grow py-4 grid grid-cols-2 grid-rows-4 gap-2">
+              <button
+                id="export-button"
+                class="font-bold text-base capitalize px-6 py-2 bg-red-500/50 rounded-lg"
+              >
+                export data
+              </button>
+              <button
+              id="import-button"
+                class="font-bold text-base capitalize px-6 py-2 bg-red-500/50 rounded-lg"
+              >
+                import data
+              </button>
+              <button
+              id="clearHistory-button"
+                class="font-bold text-base capitalize px-6 py-2 bg-red-500/50 rounded-lg"
+              >
+                clear history
+              </button>
+            </div>
+            <div
+              class="flex items-center justify-center space-x-6 py-3 border-t-2 border-[#1e201e]"
+            >
+              <button
+                class="bg-red-500/50 size-10 rounded-full border-2 border-[#1e201e]"
+              ></button>
+              <button
+                class="bg-green-500/50 size-10 rounded-full border-2 border-[#1e201e]"
+              ></button>
+              <button
+                class="bg-blue-500/50 size-10 rounded-full border-2 border-[#1e201e]"
+              ></button>
+              <button
+                class="bg-purple-500/50 size-10 rounded-full border-2 border-[#1e201e]"
+              ></button>
+            </div>
+          </div>
+          <!-- <div id="bottom" class="flex items-center justify-center">
+            <button
+              class="bg-red-500/50 text-lg capitalize font-bold px-4 py-2 rounded"
+            >
+              save setting
+            </button>
+          </div> -->
+        </div>
+      </div>
     </div>
     <script src=".//scripts/main.js"></script>
   </body>

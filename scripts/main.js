@@ -4,8 +4,9 @@ const App = {
     viewComponent: document.querySelector("#view-component"),
     historyComponent: document.querySelector("#history-component"),
     navButtons: document.querySelectorAll("#navigation-menu > div"),
+    settingContainer: document.querySelector("#setting-component-wraper"),
+    settingButton: document.querySelector("#setting-button"),
   },
-  appVariables: {},
   userData: [],
   helperFunctions: {
     createElements: function (info = null) {
@@ -92,6 +93,46 @@ const App = {
         today.getMonth() === dateToCheck.getMonth() &&
         today.getDate() === dateToCheck.getDate()
       );
+    },
+    saveData: function (data) {
+      if (App.userData.length) {
+        data.forEach((routineObj) => {
+          let isProcessEnd1 = false;
+          App.userData.forEach((savedRoutineObj) => {
+            if (routineObj.routineName == savedRoutineObj.routineName) {
+              routineObj.exersices.forEach((exersiceObj) => {
+                let isProcessEnd2 = false;
+                savedRoutineObj.exersices.forEach((savedExersiceObj) => {
+                  if (
+                    savedExersiceObj.name == exersiceObj.name &&
+                    savedExersiceObj.id != exersiceObj.id
+                  ) {
+                    savedRoutineObj.exersices.push(exersiceObj);
+                    isProcessEnd2 = true;
+                  } else if (
+                    savedExersiceObj.name != exersiceObj.name &&
+                    savedExersiceObj.id == exersiceObj.id
+                  ) {
+                    savedRoutineObj.exersices.push(exersiceObj);
+                    isProcessEnd2 = true;
+                  }
+                });
+
+                if (isProcessEnd2) {
+                  savedRoutineObj.exersices.push(exersiceObj);
+                }
+              });
+            }
+          });
+          if (!isProcessEnd1) {
+            App.userData.push(routineObj);
+          }
+        });
+      } else {
+        App.userData = data;
+      }
+      localStorage.setItem("workoutDiary", JSON.stringify(App.userData));
+      location.reload();
     },
   },
 };
@@ -205,9 +246,44 @@ function viewSystem() {
         });
         const p = App.helperFunctions.createElements({
           type: "p",
-          classes: "text-[#ecdfcc] py-1 capitalize font-bold",
+          classes:
+            "capitalize font-bold text-[#ecdfcc] py-1 flex items-center justify-between mb-2",
           content: `${exersiceObj.name}`,
         });
+
+        const button = App.helperFunctions.createElements({
+          type: "button",
+          classes: "size-8 p-1 mr-2 active:bg-[#1E201E] rounded",
+          attributes: [{ name: "id", value: exersiceObj.id }],
+        });
+        button.innerHTML =
+          '<img src="./assets/cross.svg" alt="" class="w-full">';
+
+        button.addEventListener("click", (event) => {
+          const id = event.currentTarget.getAttribute("id");
+
+          App.userData.forEach((routineObj) => {
+            routineObj.exersices.forEach((exersiceObj) => {
+              if (exersiceObj.id == id) {
+                const index = routineObj.exersices.indexOf(exersiceObj);
+                if (index > -1) {
+                  console.log(exersiceObj, id, index);
+                  routineObj.exersices.splice(index, 1);
+                  localStorage.setItem(
+                    "workoutDiary",
+                    JSON.stringify(App.userData)
+                  );
+                  location.reload();
+                }
+              }
+            });
+          });
+
+          console.log(id);
+        });
+
+        p.append(button);
+
         const ul = App.helperFunctions.createElements({
           type: "ul",
           classes: "text-base  text-[#ecdfcc] text-center space-y-1",
@@ -290,6 +366,108 @@ function historySystem() {
   });
 }
 
+function setting() {
+  const toggle = () => {
+    App.domElements.settingContainer.classList.toggle("hidden");
+  };
+  App.domElements.settingButton.addEventListener("click", toggle);
+  App.domElements.settingContainer
+    .querySelector("#setting-close-button")
+    .addEventListener("click", toggle);
+  App.domElements.settingContainer
+    .querySelector("#setting-component")
+    .addEventListener("click", (event) => {
+      event.stopPropagation();
+    });
+  App.domElements.settingContainer.addEventListener("click", toggle);
+
+  function exportData(filename = "workoutDiaryData.json") {
+    if (!App.userData) {
+      return alert("workout data not found!");
+    }
+    const jsonStr = JSON.stringify(App.userData, null, 2);
+    // console.log(jsonStr);
+    const blob = new Blob([jsonStr], { type: "application/json" });
+
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = filename;
+
+    link.click();
+
+    // Clean up the URL object after download
+    URL.revokeObjectURL(link.href);
+  }
+
+  App.domElements.settingContainer
+    .querySelector("#export-button")
+    .addEventListener("click", function () {
+      exportData();
+    });
+
+  function importData() {
+    const fileInput = App.helperFunctions.createElements({
+      type: "input",
+      attributes: [{ name: "type", value: "file" }],
+    });
+
+    // Trigger the file input to open the file picker
+    fileInput.click();
+
+    // Handle file selection
+    fileInput.onchange = () => {
+      const file = fileInput.files;
+      // Check if a file is selected and if it is a JSON file
+      if (file && file[0] && file[0].type === "application/json") {
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+          // try {
+          //   // Parse the file content as JSON
+          //   const jsonData = JSON.parse(e.target.result);
+          //   console.log("JSON data:", jsonData);
+          //   App.helperFunctions.saveData(jsonData);
+          //   // Use jsonData in your code here
+          //   // Example: console.log(jsonData.someKey);
+          // } catch (error) {
+          //   console.error("Error parsing JSON:", error);
+          // }
+          const jsonData = JSON.parse(e.target.result);
+          console.log("JSON data:", jsonData);
+          App.helperFunctions.saveData(jsonData);
+        };
+
+        // Read the first file as text
+        reader.readAsText(file[0]);
+      } else {
+        console.error("Please select a valid JSON file.");
+      }
+    };
+  }
+
+  App.domElements.settingContainer
+    .querySelector("#import-button")
+    .addEventListener("click", importData);
+
+  function clearHistory() {
+    if (App.userData) {
+      const userConfirmation = confirm(
+        "will you want to delete data permanently!"
+      );
+      console.log(userConfirmation);
+      if (userConfirmation) {
+        App.userData = [];
+        localStorage.removeItem("workoutDiary");
+      }
+      location.reload();
+    }
+  }
+
+  App.domElements.settingContainer
+    .querySelector("#clearHistory-button")
+    .addEventListener("click", clearHistory);
+}
+
 navigationSystem();
 noteSystem();
 document.addEventListener("DOMContentLoaded", function () {
@@ -299,44 +477,4 @@ document.addEventListener("DOMContentLoaded", function () {
     historySystem();
   }
 });
-
-// // ******************view component**********************
-
-// if (localStorage.getItem("workoutDiary")) {
-//   // console.log(true)
-
-//   const container = document.querySelector("#view-component");
-//   const data = JSON.parse(localStorage.getItem("workoutDiary")).userData;
-
-//   data.forEach((obj) => {
-//     const component = createElement("div");
-//     const h1 = createElement(
-//       "h1",
-//       "text-xl font-extrabold text-[#ecdfcc]",
-//       obj.routineName
-//     );
-//     const exersiceContainer = createElement("div");
-//     const p = createElement("p", "text-[#ecdfcc] py-1", obj.exersiceName);
-//     const ul = createElement(
-//       "ul",
-//       "text-base leading-8 text-[#ecdfcc] text-center space-y-1"
-//     );
-
-//     obj.sets.forEach((set, index) => {
-//       const li = createElement(
-//         "li",
-//         "bg-[#1e201e] rounded-md",
-//         `${index + 1}. ${set}`
-//       );
-//       ul.append(li);
-//     });
-
-//     exersiceContainer.appendChild(p);
-//     exersiceContainer.appendChild(ul);
-
-//     component.appendChild(h1);
-//     component.appendChild(exersiceContainer);
-
-//     container.appendChild(component);
-//   });
-// }
+setting();
